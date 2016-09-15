@@ -1,0 +1,28 @@
+20160915 Team Meeting
+-----------------------------------------------------------------------------
+
+Meeting Agenda:
+---------------------------------
+Demo of working dataParsing.cgi
++ Debugging options
++ Provide necessary files (via github [in the examples directory])
+
+To-Dos:
+-----------
+Test cases / examples
++ Reformat FirstSTEP 2014's files for input to dataParsing.cgi (Dr. C)
++ Look at FirstSTEP 2014's files
+
+Fix / Rewrite backend code
++ Expand dataParsing.cgi to work with command-line arguments [Ethan]
+  import os
+  if 'GATEWAY_INTERFACE' in os.environ:
+      fileItems = form['filename[]']
+  else:
+      fileItems = sys.argv
++ Get a SIMPLE python cgi script to produce a SIMPLE webpage
+  * Apply to dataParsing.cgi
+  
+Email (instead of slack)  
+
+
