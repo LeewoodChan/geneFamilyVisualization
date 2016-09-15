@@ -332,11 +332,11 @@ def dataProcess():
         count +=1
         count2 +=1
 
-    print("preFinal")
-    for row in preFinal:
-        print(len(row))
-        print(row)
-    print()
+    # print("preFinal")
+    # for row in preFinal:
+    #     print(len(row))
+    #     print(row)
+    # print()
 
     ###DEBUGGING SECTION TO SEE THE 2D ARRAY OF EXON LENGTHS
     i = 1
@@ -353,7 +353,7 @@ def dataProcess():
                 startNum += 1
         if startNum > maxStart:
             maxStart = startNum
-    print('max start is', maxStart)
+    # print('max start is', maxStart)
 
 
     #create random colors for each gene using colorsys library
@@ -394,12 +394,12 @@ def dataProcess():
     #        if prevNumOfExons > 2:
     #            y += ((prevNumOfExons-1)*3)
             x = xStart
-            print('xStart is ', xStart)
+            # print('xStart is ', xStart)
             name = row[0]
             colCount = 0
             color = RGB[rowCount]
             printSVG.write('\n<!--'+name+'-->\n')
-            print(name)
+            # print(name)
             prevNumOfExons = -1
             prevExonCount = 0
             prevDy = -1
@@ -409,20 +409,20 @@ def dataProcess():
                     if col[0] >= -1:
                         x = xStart + (maxStart * 75)
                         firstX = x + 50
-                        print('firstx is', firstX)
+                        # print('firstx is', firstX)
                     else:
                         firstX = xStart + (maxStart * 75) + 50
                 elif colCount > 0:
                     if col[0] > -1:
                         x = 3*col[0]
-                        print('col[0] is', col[0], x, firstX)
+                        # print('col[0] is', col[0], x, firstX)
                         if col[0] < firstX:
                             x = firstX + 60
                         if x < prevX+50:
                             x = prevX + 100
                     elif  col[0] is -1:
                         x = 3*col[1][2]
-                        print('col[1][2]', col[1][2], x, firstX)
+                        # print('col[1][2]', col[1][2], x, firstX)
                         if col[1][2] < firstX:
                             x = firstX + 60
                         if x < prevX+50:

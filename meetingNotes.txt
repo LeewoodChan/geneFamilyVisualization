@@ -20,9 +20,14 @@ Fix / Rewrite backend code
       fileItems = form['filename[]']
   else:
       fileItems = sys.argv
-+ Get a SIMPLE python cgi script to produce a SIMPLE webpage
-  * Apply to dataParsing.cgi
++ Get a SIMPLE python cgi script to produce a SIMPLE webpage (moot point)
+  * Apply to dataParsing.cgi (done!)
   
-Email (instead of slack)  
+If you're sending a question to Dr. C via slack.com, then either 1) send it directly to him or 2) use @channel [which will include everyone] (so that Dr. C will get an email)
 
-
+Reporting protocols
++ Email by Thursday 11:00 AM with:
+  * Progress for the week
+  * Roadblocks
+  * Plans for the next week
+  * Hours worked
