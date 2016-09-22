@@ -174,6 +174,12 @@ def dataProcess():
                 CDSExonCount += 1
                 count += 1
 
+            if len(CDSExon) % 3 != 0:
+                # os.system("echo 'ERROR: length of CDSExon (" + CDSExon+") is "+str(len(CDSExon))+", which is not a multiple of 3! (in "+infile+", name: "+name+")' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
+                excessNucleotides = len(CDSExon) % 3
+                os.system("echo 'NOTE: Truncating the last "+ str(len(CDSExon) % 3)+" nuclotides from " + CDSExon+" (from "+infile+", name: "+name+")' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
+                CDSExon = CDSExon[:-excessNucleotides]
+                
             gene.CDS = CDSExon
             gene.AA = dna_to_prot(CDSExon)
             gene.AA_len = len(gene.AA)
