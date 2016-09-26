@@ -31,3 +31,23 @@ Reporting protocols
   * Roadblocks
   * Plans for the next week
   * Hours worked
+
+
+20160926
+-----------------------------------------------------------------------------
+Dr. Seipelt-Thiemann's sequences (added to github repository):
+
+Protein		Nucleotide #	Amino Acid #	GI #
+-------------------------------------------------------
+APN / ANPEP	NM_001150.2	NP_001141.2	GI: 157266299
+APO	NM_001193331.2	NP_001180260.1	GI:308387394
+APQ / Laev	NM_173800.4	NP_776161.3	GI: 194239712
+ENPEP	NM_001977.3	NP_001968.3	GI: 132814466
+ERAP1	NM_016442.3	NP_057526.3	GI: 94818900
+ERAP2	NM_022350.3	NP_071745.1	GI: 194306627
+LNPEP	NM_005575.2	NP_005566.2	GI: 61742776
+LTA4H	NM_000895.2	NP_000886.1	GI: 375331875
+NPEPPS	NM_006310.3	NP_006301.3	GI: 158937235
+RNPEP	NM_020216.3	NP_064601.3	GI: 40316914
+RNPEPL1	NM_018226.4	NP_060696.4	GI: 318065088
+TRHDE	NM_013381.2	NP_037513.1	GI: 218751879
