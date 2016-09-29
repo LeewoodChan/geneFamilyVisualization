@@ -498,33 +498,47 @@ def dataProcess():
         printSVG.write("\n</body>\n")
         printSVG.write("</html>")
 
-def main():
+def main(argv):
     #os.system("chmod -R 777 files/*")
     os.system("echo 'DEBUGGING:' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
-    fileItems = form['filename[]']
+    
+
+
+ 
+
     
     message = ""
 
     mkDir()
-
-    for fileItem in fileItems:
-        if fileItem.file:
-            fn = os.path.basename(fileItem.filename.replace("\\", "/"))
-            try:
-                open(path + '/' + fn, 'wb').write(fileItem.file.read())
-            except:
-                print("""Content-Type: text/html\n\n
-                        <html>
-                        <body>
-                            <p>%s</p>
-                        </body>
-                        </html>
-                        """ %(path+'/'+fn))
-                exit()
-#            message = message + 'The file "' + fn + '"was uploaded successfully with the path' + path + '\n'
-#        else:
-#            message = 'No file was uploaded'
-
+    #if the file is from html upload, else get the argv 
+    if 'GATEWAY_INTERFACE' in os.environ:
+        fileItems = form['filename[]']
+        for fileItem in fileItems:
+            if fileItem.file:
+                fn = os.path.basename(fileItem.filename.replace("\\", "/"))
+                try:
+                    open(path + '/' + fn, 'wb').write(fileItem.file.read())
+                except:
+                    print("""Content-Type: text/html\n\n
+                          <html>
+                          <body>
+                              <p>%s</p>
+                          </body>
+                          </html>
+                          """ %(path+'/'+fn))
+                    exit()
+#               message = message + 'The file "' + fn + '"was uploaded successfully with the path' + path + '\n'
+#               else:
+#                    message = 'No file was uploaded'
+    #fileItems from the argv, open the file and write in the open path
+    #however, the open path is got an error.
+    else:
+        fileItems = sys.argv
+        for x in range(1, len(fileItems)-1):
+            op = open(fileItems[x],'r')
+            open(path + '/' + fn, 'wb').write(op.read())
+                  
+                     
     dataProcess()
 
     redirectStr="""Content-Type: text/html\n\n
@@ -541,5 +555,5 @@ def main():
     print(redirectStr)
 
 if __name__ == "__main__":
-    main() 
+    main(sys.argv[1:]) 
     exit(0)
