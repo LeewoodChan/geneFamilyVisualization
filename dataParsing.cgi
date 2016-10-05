@@ -498,55 +498,33 @@ def dataProcess():
         printSVG.write("\n</body>\n")
         printSVG.write("</html>")
 
-def main(argv):
+def main():
     #os.system("chmod -R 777 files/*")
     os.system("echo 'DEBUGGING:' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
-
+    fileItems = form['filename[]']
     
     message = ""
 
     mkDir()
-    
-    if 'GATEWAY_INTERFACE' in os.environ:
-        fileItems = form['filename[]']
-        for fileItem in fileItems:
-            if fileItem.file:
-                fn = os.path.basename(fileItem.filename.replace("\\", "/"))
-                try:
-                    open(path + '/' + fn, 'wb').write(fileItem.file.read())
-                except:
-                    print("""Content-Type: text/html\n\n
-                          <html>
-                          <body>
-                              <p>%s</p>
-                          </body>
-                          </html>
-                          """ %(path+'/'+fn))
-                    exit()
-#               message = message + 'The file "' + fn + '"was uploaded successfully with the path' + path + '\n'
-#               else:
-#                    message = 'No file was uploaded'
 
-    else:
-        fileItems = sys.argv[1:]
-        for fileItem in fileItems:
-            op = open(fileItem,'r').read()
-            fn = os.path.basename(fileItem)
-#           Need to change 'wb' to 'w' due to this error message
-#           'str' does not support the buffer interface
-           # open(path + '/' + fn, 'w').write(op)
+    for fileItem in fileItems:
+        if fileItem.file:
+            fn = os.path.basename(fileItem.filename.replace("\\", "/"))
             try:
-                open(path + '/' + fn, 'w').write(op)
+                open(path + '/' + fn, 'wb').write(fileItem.file.read())
             except:
                 print("""Content-Type: text/html\n\n
-                      <html>
-                      <body>
-                         <p>%s</p>
-                      </body>
-                      </html>
-                      """ %(path+'/'+fn))
+                        <html>
+                        <body>
+                            <p>%s</p>
+                        </body>
+                        </html>
+                        """ %(path+'/'+fn))
                 exit()
-                     
+#            message = message + 'The file "' + fn + '"was uploaded successfully with the path' + path + '\n'
+#        else:
+#            message = 'No file was uploaded'
+
     dataProcess()
 
     redirectStr="""Content-Type: text/html\n\n
@@ -563,5 +541,5 @@ def main(argv):
     print(redirectStr)
 
 if __name__ == "__main__":
-    main(sys.argv) 
+    main() 
     exit(0)
