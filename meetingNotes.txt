@@ -71,4 +71,12 @@ python3 dataParsing.cgi examples/drSeipeltThiemann/*.txt  > output.html 2> errs.
 Agenda:
 ---------------------------------
 Status reports (see also last meeting's to-dos)
++ Ethan reported about using <div>s instead of .svg files
 Git tutorial
++ Working model
+  * Create newFile.txt
+  * git add newFile.txt  # adds newFile.txt to your staging area
+  * git commit -m "message"  # updates newFile.txt in your local repository
+  * git pull  # get updates from the remote repository
+    - Handle any conflicts
+  * git push   # share the updates from your local repository to the remote repository
