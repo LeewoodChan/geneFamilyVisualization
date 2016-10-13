@@ -51,3 +51,24 @@ NPEPPS	NM_006310.3	NP_006301.3	GI: 158937235
 RNPEP	NM_020216.3	NP_064601.3	GI: 40316914
 RNPEPL1	NM_018226.4	NP_060696.4	GI: 318065088
 TRHDE	NM_013381.2	NP_037513.1	GI: 218751879
+
+
+
+20160929
+-----------------------------------------------------------------------------
+Next Week To-Dos:
+---------------------------------
+Reese: Continue understanding the code and commenting it
+Ethan: Familiarize with git
+Leewood: Get command-line version working
+
+python3 dataParsing.cgi examples/drSeipeltThiemann/*.txt  > output.html 2> errs.txt
+
+
+20161013
+-----------------------------------------------------------------------------
+
+Agenda:
+---------------------------------
+Status reports (see also last meeting's to-dos)
+Git tutorial
