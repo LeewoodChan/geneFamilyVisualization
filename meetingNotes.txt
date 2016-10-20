@@ -123,4 +123,12 @@ Git tutorial
 Agenda:
 ---------------------------------
 Status reports (see also last meeting's to-dos)
++ Leewood: Q: Command-line args ready to merge into master branch? A: Yes
+
 Added Tasks / Timelines in 20160830 entry above
++ Need to add: Remove "pseudo linear" (additional) horizontal spacing
+
+To-dos:
++ Ethan: Make simple .svg file with a mouseover windows with links in the window
++ Leewood: Merge addArg branch into master branch
++ Reese: Commenting code and modulating the code
