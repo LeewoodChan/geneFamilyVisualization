@@ -1,3 +1,38 @@
+20160830 Meeting
+-----------------------------------------------------------------------------
+Background & Motivation:
+---------------------------------
+Alpha-fetoproteinRelatedGeneARGANewMemberOfTheAlbuminGeneFamilyThatIsNoLongerFunctionalInPrimates.pdf
+EvolutionaryAnalysisOfTheMammalianM1AminopeptidasesRevealsConservedExonStructureAndGeneDeath.pdf
+Research Statement
+
+Tasks / Timelines:
+---------------------------------
+Understand the processing pipeline
+Develop test cases based on FirstSTEP project results
+Add documentation [comments] to the existing code
+Modularize the code
+Install necessary packages to run the code
+
+Basic Layout:
++ If there's no exon for 1+ genes, move the exon box down
++ Boxes with the same gene should never overlap (push everything to the right)
++ "When the lines cross over, things can get visually messy, is it possible to maybe make the exon blocks slightly bigger, the colored lines thicker, and put more visual space between each of the lines? If you had thicker lines, and more negative space, I think it would be easier to keep track of them."
++ Make sure the output/image works for web, scientific articles and poster-sized paper
++ Verify supporting browsers / OSes
++ More sure "lines should never touch exons that aren't matching"
++ Additional output formats (so that the "output file be something editable by the authors")
++ Calculated pairwise similarities and determine the layout based on either the most similar first or last
+
+Interactive:
++ Tooltip for boxes: Gene name and exon # (e.g., gene ABC123, exon 3; gene XYZ789, exon 7)
++ Color the exon sizes in the boxes the same color as the gene it's referencing
++ Show % sequence identity shared among two gene exons along with shared exon lengths
++ Verify supporting browsers / OSes
++ Add interactive option to display the alignment for each exon
++ Select which genes to include
+
+
 20160915 Team Meeting
 -----------------------------------------------------------------------------
 
@@ -80,3 +115,12 @@ Git tutorial
   * git pull  # get updates from the remote repository
     - Handle any conflicts
   * git push   # share the updates from your local repository to the remote repository
+
+
+20161020
+-----------------------------------------------------------------------------
+
+Agenda:
+---------------------------------
+Status reports (see also last meeting's to-dos)
+Added Tasks / Timelines in 20160830 entry above
