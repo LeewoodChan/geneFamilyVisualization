@@ -130,5 +130,41 @@ Added Tasks / Timelines in 20160830 entry above
 
 To-dos:
 + Ethan: Make simple .svg file with a mouseover windows with links in the window
-+ Leewood: Merge addArg branch into master branch
++ Leewood: Merge addArg branch into master branch & changing the STDOUT to be the html (instead of writing it to a file)
 + Reese: Commenting code and modulating the code
+
+
+20161027
+-----------------------------------------------------------------------------
+Agenda:
+---------------------------------
+Status reports (see also last meeting's to-dos)
+
+To-dos:
++ Ethan: 
++ Leewood: 
++ Reese: 
+
+
+20161110
+-----------------------------------------------------------------------------
+Agenda:
+---------------------------------
+Dr. Carroll: Summary of call with Dr. Seipelt-Thiemann:
+  Exons can have lowercase and uppercase nucleotides in them.  Lowercase nucleotides are part of the untranslated region (UTR).   Dr. Seipelt-Thiemann colored the circles grey for the exons with ONLY untranslated nucleotides.  With an exon has some UTR, then don't align it to other exons.
+  Additionally, exons that do share the same reading frame (and start within n residues of each other), but do not have significant (biologically meaniful) similarity, should not be visually represented in the same exon shape.
+  Exon boundaries are at most 9-12 nucleotides within each other
+
+
+The visualizer interface needs to know the exon
+addNode(exon_id, MSA_column, readingFrame {0-3}, node_color = None )
+addGeneFamily( name, list of exon_ids)
+
+
+parser -> visualizer interface:
+json: 3D array;
+1st index:
+1) 2D array of exon properties:
+   Foreach exon, list it's id, MSA_column, readingFrame {0-3}, node_color = None
+2) 2D ragged array:
+   Foreach gene, it's name and list of exon_ids
