@@ -156,7 +156,7 @@ Dr. Carroll: Summary of call with Dr. Seipelt-Thiemann:
   Exon boundaries are at most 9-12 nucleotides within each other
 
 
-The visualizer interface needs to know the exon
+he visualizer interface needs to know the exon
 addNode(exon_id, MSA_column, readingFrame {0-3}, node_color = None )
 addGeneFamily( name, list of exon_ids)
 
@@ -168,3 +168,21 @@ json: 3D array;
    Foreach exon, list it's id, MSA_column, readingFrame {0-3}, node_color = None
 2) 2D ragged array:
    Foreach gene, it's name and list of exon_ids
+
+
+20161115
+-----------------------------------------------------------------------------
+Agenda:
+---------------------------------
+Status of hours?
+
+Status reports:
+-----------
+Reece: Flowchart
+Ethan: 3D array version of Dr. Seipelt-Thiemann's example
+       + Can it work with ragged arrays?
+       + Just 2 genes
+       + All genes
+Micah: Visualizer updates (to accept 3D array)
+       + Can it work with ragged arrays?
+Leewood: 
