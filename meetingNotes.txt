@@ -165,7 +165,7 @@ parser -> visualizer interface:
 json: 3D array;
 1st index:
 1) 2D array of exon properties:
-   Foreach exon, list it's id, MSA_column, readingFrame {0-3}, node_color = None
+   Foreach exon, list it's (visual exon) id, MSA_column, readingFrame {0-2}, node_color = None
 2) 2D ragged array:
    Foreach gene, it's name and list of exon_ids
 
@@ -178,11 +178,31 @@ Status of hours?
 
 Status reports:
 -----------
-Reece: Flowchart
-Ethan: 3D array version of Dr. Seipelt-Thiemann's example
-       + Can it work with ragged arrays?
-       + Just 2 genes
-       + All genes
-Micah: Visualizer updates (to accept 3D array)
-       + Can it work with ragged arrays?
+Reece:   Flowchart
+Ethan:   3D json array version of Dr. Seipelt-Thiemann's example
+         + Can it work with ragged arrays? A: Yes
+         + Just 2 genes
+         + All genes
+Micah:   Visualizer updates (to accept 3D array)
+         + Can it work with ragged arrays?: A: Yes
 Leewood: 
+
+Future: Add MSA coordinates to json data (from parser to visualization)
+
+To-Dos:
+-----------
+Reece:   Flowchart
+         Email hours
+Ethan:   Research end of URECA award
+         Email hours
+         3D array version of Dr. Seipelt-Thiemann's example
+         + Just 2 genes
+         + Deposit json output into Dr. Seipelt-Thiemann's example directory
+Dr. C:   Format Dr. Seipelt-Thiemann's MSA
+Micah:   Visualize strict from json data
+         Add legend
+Leewood: 
+
+
+Next meeting: Thursday, 2:00 PM
+
