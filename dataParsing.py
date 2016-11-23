@@ -14,6 +14,8 @@ import colorsys
 
 sys.stderr = sys.stdout
 
+UTR_EXON = -2
+
 form = cgi.FieldStorage()
 path = ""
 
@@ -77,6 +79,11 @@ def dna_to_prot(strand):
 
 # make a new directory with a random name (in the files directory)
 def mkDir():
+    if not os.path.exists("files"):
+        os.makedirs("files")
+        #os.chmod(path, 0o755)
+        os.chmod("files", 0o777) # DEBUGGING
+        
     newDir = binascii.hexlify(os.urandom(16)).decode()
     global path
     path = "files/" + newDir
@@ -203,80 +210,95 @@ def dataProcess():
             else:
                 gene_dic[name].Aligned_str += line
 
+    #             
     for name, gene in gene_dic.items():
-        count = 0
-        exon = 0
-        start = False
+        count = 0  # alignment index
+        exon = 0   # index of the current        exon for this gene
+        start = False  # first time?
+        
+        if exon >= len( gene.CDS_len):
+            # no valid exons, go to the next gene
+            continue
+            
         frame_len = int(gene.CDS_len[exon]/3)
 
 	# process all of the 5' exons that are entirely UTR (i.e., have at most 2 nucleotides)
         while frame_len == 0:  # only UTR
-            gene.Frames[exon].append(-2)
+            gene.Frames[exon].append(UTR_EXON)
             exon += 1
-            frame_len = int(gene.CDS_len[exon]/3)
-	    
+            if exon < len( gene.CDS_len):
+                frame_len = int(gene.CDS_len[exon]/3)
+            else:
+                break
+
+	# record the alignment index for
+        # 1) the first AA and
+        # 2) the last AA for each exon    
         for char in gene.Aligned_str:
             if char is '-':
-	        pass
+                pass
             else:
                 if start is False:
                     start = True
-                    gene.Frames[exon].append( count )  # record this gene's coding exon index
+                    # FUTURE: can this be pulled out of the for loop (i.e., can the frame_len == 0 for the first AA)?
+                    gene.Frames[exon].append( count )  # record the index of the alignment
                 elif frame_len is 0:  # done processing this exon
                     exon += 1
-                    gene.Frames[exon].append( count )  # record this gene's coding exon index
+                    gene.Frames[exon].append( count )  # record the index of the alignment
                     frame_len = int(gene.CDS_len[exon]/3)
                     while frame_len == 0: # only UTR 
-                        gene.Frames[exon].append(-2)
+                        gene.Frames[exon].append(UTR_EXON)
                         exon += 1
                         frame_len = int(gene.CDS_len[exon]/3)
                 else:
                     frame_len -= 1
             count += 1
+            
+	# process all of the 3' exons that are entirely UTR
         while exon < len(gene.CDS_len)-1:
             exon += 1
-            gene.Frames[exon].append(-2)
+            gene.Frames[exon].append(UTR_EXON)
 
-    #Make Final 2D array
-    CombinedLists = []
-    finalList = []
-    rowCount = 0
+    # Make Final 2D array
+    CombinedLists = []  # 1st index: genes; 2nd index items are: name, CDSExonCount, startFrame, stopFrame, CDSlength, exonLength, then AA alignment indicies
+    geneIndex = 0
+    # each gene is a row in Com
     for name, gene in gene_dic.items():
         CombinedLists.append([name])
         for col in gene.Frames:
-            CombinedLists[rowCount].append(col)
-        rowCount += 1
+            CombinedLists[geneIndex].append(col)
+        geneIndex += 1
 
     preFinal = []
-    temp = []
-    rowCount = 0
-    count = 1
-    count2 = 0
-    #for row in testList:
-    for row in CombinedLists:
-        name1 = row[0]
+    count = 0
+    for frameInfoList in CombinedLists:
+        name1 = frameInfoList[0]
         preFinal.append([name1])
-        for col in row[1:]:
-            rowCount = count
+        for col in frameInfoList[1:]:
+            rowCount = count + 1
             rowOn = 0
-            exonNum = col[0]
-            exonSize = col[4]
-            MSALoc = col[5]
-            if col[5] is -2:
-                preFinal[count2].append([col[5], col[4]])
-            elif count is 1:
-                preFinal[count2].append([col[5], col[4]])
+            exonNum = col[0]  # coding exon
+            startFrame = col[1]
+            endFrame = col[2]
+            # = col[3]
+            exonSize = col[4] # coding length
+            alignmentIndex_firstExon = col[5]
+            
+            if alignmentIndex_firstExon is UTR_EXON:  # if the first exon is only a UTR
+                preFinal[count].append([alignmentIndex_firstExon, exonSize])
+            elif count == 0:
+                preFinal[count].append([alignmentIndex_firstExon, exonSize])
                 for Nrow in CombinedLists[rowCount:]:
                     name2 = Nrow[0]
                     for Ncol in Nrow[1:]:
-                        if col[1] == Ncol[1] and col[2] == Ncol[2]:
-                            if (abs(col[4] - Ncol[4]) % 3) is 0:
-                                if abs(col[5] - Ncol[5]) <= 10:
-                                    preFinal[count2][col[0]+1].append([name2, Ncol[5], Ncol[4], Ncol[0]])
+                        if startFrame == Ncol[1] and endFrame == Ncol[2]:  # start and end frames match
+                            if (abs(exonSize - Ncol[4]) % 3) is 0: # lengths are the same ORF
+                                if abs(alignmentIndex_firstExon - Ncol[5]) <= 10:
+                                    # each of first alignment positions for each gene are within 10 of each other
+                                    preFinal[count][exonNum+1].append([name2, Ncol[5], Ncol[4], Ncol[0]])
             else:
                 found = False
-                temp = preFinal
-                for row1 in temp:
+                for row1 in preFinal:
                     if found is False:
                         lastName = row1[0]
                         colOn = 0
@@ -286,23 +308,22 @@ def dataProcess():
                                 while count3 < len(col1)-2 and found is False:
                                     if name1 == col1[count3+2][0] and exonNum == col1[count3+2][3]:
                                         found = True
-                                        preFinal[count2].append([-1, [rowOn, colOn, col1[0]]])
+                                        preFinal[count].append([-1, [rowOn, colOn, col1[0]]])
                                     count3 += 1
                             colOn += 1
                     rowOn += 1
 
                 if found is False:
-                    preFinal[count2].append([col[5], exonSize])
+                    preFinal[count].append([alignmentIndex_firstExon, exonSize])
                     for Nrow in CombinedLists[rowCount:]:
                         name2 = Nrow[0]
                         for Ncol in Nrow[1:]:
-                            if col[1] == Ncol[1] and col[2] == Ncol[2]:
-                                if (abs(col[4] - Ncol[4]) % 3) is 0:
-                                    if abs(col[5] - Ncol[5]) <= 10:
-                                        preFinal[count2][col[0]+1].append([name2, Ncol[5], Ncol[4], Ncol[0]])
+                            if startFrame == Ncol[1] and endFrame == Ncol[2]:
+                                if (abs( exonSize - Ncol[4]) % 3) is 0:
+                                    if abs(alignmentIndex_firstExon - Ncol[5]) <= 10:
+                                        preFinal[count][exonNum+1].append([name2, Ncol[5], Ncol[4], Ncol[0]])
             rowCount += 1
         count +=1
-        count2 +=1
 
     # print("preFinal")
     # for row in preFinal:
@@ -321,7 +342,7 @@ def dataProcess():
     for row in preFinal:
         startNum = 0
         for col in row[1:]:
-            if col[0] == -2:
+            if col[0] == UTR_EXON:
                 startNum += 1
         if startNum > maxStart:
             maxStart = startNum
@@ -399,13 +420,13 @@ def dataProcess():
                             x = firstX + 60
                         if x < prevX+50:
                             x = prevX + 100
-                    elif col[0] is -2:
+                    elif col[0] is UTR_EXON:
                         x = prevX + 60
                     printSVG.write('<text x=\"'+str(25)+'\" y=\"'+str((y+(y+50))/2)+'\" style=\"stroke:'+color+'\">\"'+name+'\"</text>')
      #               printSVG.write('<line x1=\"'+str((prevX+50))+'\" y1=\"'+str((yLineStart))+'\"x2=\"'+str((x))+'\" y2=\"'+str((yLineStop))+'\" style=\"stroke:'+color+'; stroke-width:2\"/>\n')
                 numOfExons = len(col)-1
                 dy = 50 + (50 * 0.25 * (numOfExons-1))
-                if col[0] == -2:
+                if col[0] == UTR_EXON:
                     dasharray = 'stroke-dasharray: 10 5;'
                 else:
                     dasharray = ''
@@ -465,7 +486,7 @@ def dataProcess():
         printSVG.write("</html>")
 
 def main(argv):
-    #os.system("chmod -R 777 files/*")
+    os.system("chmod -R 777 files")
     #os.system("echo 'DEBUGGING:' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
 
     

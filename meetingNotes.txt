@@ -162,12 +162,13 @@ addGeneFamily( name, list of exon_ids)
 
 
 parser -> visualizer interface:
-json: 3D array;
-1st index:
+json: dictionary of two items:
 1) 2D array of exon properties:
-   Foreach exon, list it's (visual exon) id, MSA_column, readingFrame {0-2}, node_color = None
-2) 2D ragged array:
-   Foreach gene, it's name and list of exon_ids
+   1st index: (visual exon) id
+   2nd indices: visual column start, visual column end, readingFrame {0-2}, node_color = None
+2) dictionary:
+   keys: gene names
+   values: list of exon ids
 
 
 20161115
@@ -206,3 +207,32 @@ Leewood:
 
 Next meeting: Thursday, 2:00 PM
 
+
+20161123 Sub-meeting with Reese & Dr. C
+-----------------------------------------------------------------------------
+Parser:
+-----------
+
+Process ORF locations from "left-to-right", so that the visual column numbers can easily be determined
+For each gene, keep track of the current gene_exon_id and it's starting visual_column_index
+To determine which gene_exons should be combined into a single visual_exon, look for the same reading frame,
+Somewhere in here, we need a test of something like < 50% (or some other threshold) of gaps for a given visual_column
+
+
+
+List of alignment indicies for each visual column:
+  1st index: visual column index
+  values: alignment index (of first exon in the respective visual column)
+  
+List of visual exons and their info:
+  1st index: visual column index
+  2nd index: visual exon id
+  values: readingFrame {0-2}
+  
+Dictionary of visual exon colors (if set):
+  keys: visual exon ids
+  values: node_color
+  
+Dictionary of exon id list for each gene:
+  keys: gene name
+  values: list of visual exon ids
