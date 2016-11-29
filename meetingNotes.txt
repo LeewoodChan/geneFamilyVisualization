@@ -161,15 +161,12 @@ addNode(exon_id, MSA_column, readingFrame {0-3}, node_color = None )
 addGeneFamily( name, list of exon_ids)
 
 
-parser -> visualizer interface:
-json: dictionary of two items:
+json: 3D array;
+1st index:
 1) 2D array of exon properties:
-   1st index: (visual exon) id
-   2nd indices: visual column start, visual column end, readingFrame {0-2}, node_color = None
-2) dictionary:
-   keys: gene names
-   values: list of exon ids
-
+   Foreach exon, list it's (visual exon) id, MSA_column, readingFrame {0-2}, node_color = None
+2) 2D ragged array:
+   Foreach gene, it's name and list of exon_ids
 
 20161115
 -----------------------------------------------------------------------------
@@ -210,6 +207,16 @@ Next meeting: Thursday, 2:00 PM
 
 20161123 Sub-meeting with Reese & Dr. C
 -----------------------------------------------------------------------------
+parser -> visualizer interface:
+json: dictionary of two items:
+1) 2D array of exon properties:
+   1st index: (visual exon) id
+   2nd indices: visual column start, visual column end, readingFrame {0-2}, node_color = None
+2) dictionary:
+   keys: gene names
+   values: list of exon ids
+
+
 Parser:
 -----------
 
