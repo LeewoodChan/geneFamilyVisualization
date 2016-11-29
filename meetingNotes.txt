@@ -200,7 +200,7 @@ Ethan:   Research end of URECA award
          + Just 2 genes
          + Deposit json output into Dr. Seipelt-Thiemann's example directory
 Dr. C:   Format Dr. Seipelt-Thiemann's MSA
-Micah:   Visualize strict from json data
+Micah:   Visualize strictly from json data
          Add legend
 Leewood: 
 
@@ -236,3 +236,26 @@ Dictionary of visual exon colors (if set):
 Dictionary of exon id list for each gene:
   keys: gene name
   values: list of visual exon ids
+
+
+20161201
+-----------------------------------------------------------------------------
+
+Agenda:
+---------------------------------
+
+Status reports:
+-----------
+Dr. C:   Format Dr. Seipelt-Thiemann's MSA
+         New json data format for parser to visualizer stage
+Reece:   Flowchart, commenting, re-factoring
+Ethan:   Research end of URECA award (12/8/16?)
+         3D json array version of Dr. Seipelt-Thiemann's example
+         + Just two genes
+         + Deposit json outputs (1: all genes, 2: two genes) into Dr. Seipelt-Thiemann's example directory
+Micah:   Visualize strictly from json data
+         Add legend
+Leewood: 
+
+Future: Add MSA coordinates to json data (from parser to visualization)
+Next meeting: ?
