@@ -218,9 +218,7 @@ For each gene, keep track of the current gene_exon_id and it's starting visual_c
 To determine which gene_exons should be combined into a single visual_exon, look for the same reading frame,
 Somewhere in here, we need a test of something like < 50% (or some other threshold) of gaps for a given visual_column
 
-
-
-List of alignment indicies for each visual column:
+List of alignment indices for each visual column:
   1st index: visual column index
   values: alignment index (of first exon in the respective visual column)
   
@@ -236,6 +234,16 @@ Dictionary of visual exon colors (if set):
 Dictionary of exon id list for each gene:
   keys: gene name
   values: list of visual exon ids
+
+
+20161129
+-----------------------------------------------------------------------------
+Make a list of gene exon indices (1st index: genes), to keep track of the current gene_exon_id
+Make a list of starting visual_column_indices (1st index: genes)
+Process exon boundaries (ORF locations) from "left-to-right" (so that the visual column indices can easily be determined)
+Exons with a boundary within 10 AA (make it a variable) of the leftmost exon boundary are in the same visual column
++ For those genes that are being "stretched", verify that they have <= 50% (make a variable) gaps (if they don't, increment their starting visual column index)
+Combine genes with identical reading frames together in the same visual exon, if they have the same starting visual column index
 
 
 20161201
