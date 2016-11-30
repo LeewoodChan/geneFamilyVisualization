@@ -533,7 +533,7 @@ def main(argv):
         os.system("echo 'DEBUGGING: redirectStr: " + redirectStr + "' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
         print(redirectStr)
     else:
-        printSVG = open("createSVGtemp.html", "r").read()
+        #printSVG = open("createSVGtemp.html", "r").read()
         #print(printSVG)
 
 
