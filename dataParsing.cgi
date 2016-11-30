@@ -466,26 +466,23 @@ def dataProcess():
 
 def main(argv):
     #os.system("chmod -R 777 files/*")
-    #os.system("echo 'DEBUGGING:' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
+    os.system("echo 'DEBUGGING:' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
 
     
     message = ""
 
     mkDir()
 
-    #
-    # get input file(s) from either the CGI form or from the command-line
-    #    
-    if 'GATEWAY_INTERFACE' in os.environ:  # Called from a CGI form
+    useArgv = False
+    
+    if 'GATEWAY_INTERFACE' in os.environ:
         fileItems = form['filename[]']
         for fileItem in fileItems:
             if fileItem.file:
-                fn = os.path.basename(fileItem.filename.replace("\\", "/"))  # change Windows filenames
+                fn = os.path.basename(fileItem.filename.replace("\\", "/"))
                 try:
-		    # copy the file
                     open(path + '/' + fn, 'wb').write(fileItem.file.read())
                 except:
-		    # display error message
                     print("""Content-Type: text/html\n\n
                           <html>
                           <body>
@@ -493,19 +490,23 @@ def main(argv):
                           </body>
                           </html>
                           """ %(path+'/'+fn))
-                    sys.exit()
+                    exit()
+#               message = message + 'The file "' + fn + '"was uploaded successfully with the path' + path + '\n'
+#               else:
+#                    message = 'No file was uploaded'
+
     else:
-        # get file(s) from the command-line
+        useArgv = True
         fileItems = sys.argv[1:]
         for fileItem in fileItems:
             op = open(fileItem,'r').read()
             fn = os.path.basename(fileItem)
+#           Need to change 'wb' to 'w' due to this error message
+#           'str' does not support the buffer interface
+           # open(path + '/' + fn, 'w').write(op)
             try:
-                # Need to change 'wb' to 'w' due to this error message
-                # 'str' does not support the buffer interface
                 open(path + '/' + fn, 'w').write(op)
             except:
-		# display error message
                 print("""Content-Type: text/html\n\n
                       <html>
                       <body>
@@ -513,10 +514,10 @@ def main(argv):
                       </body>
                       </html>
                       """ %(path+'/'+fn))
-                sys.exit()
+                exit()
                      
     dataProcess()
-
+	    
     redirectStr="""Content-Type: text/html\n\n
 <html>
     <head>
@@ -527,9 +528,17 @@ def main(argv):
     </body>
 </html>
 """
-    os.system("echo 'DEBUGGING: redirectStr: " + redirectStr + "' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
-    print(redirectStr)
+#    os.system("echo 'DEBUGGING: redirectStr: " + redirectStr + "' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
+    if(not useArgv):
+        os.system("echo 'DEBUGGING: redirectStr: " + redirectStr + "' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
+        print(redirectStr)
+    else:
+        printSVG = open("createSVGtemp.html", "r").read()
+        #print(printSVG)
+
+
+	   
 
 if __name__ == "__main__":
     main(sys.argv) 
-    sys.exit(0)
+    exit(0)
