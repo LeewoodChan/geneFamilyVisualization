@@ -252,7 +252,7 @@ Exons with a boundary within 10 AA (make it a variable) of the leftmost exon bou
 Combine genes with identical reading frames together in the same visual exon, if they have the same starting visual column index
 
 
-20161201
+20161201 Team Meeting
 -----------------------------------------------------------------------------
 
 Agenda:
@@ -272,8 +272,7 @@ Micah:   Visualize strictly from json data
 Leewood: 
 
 Future: Add MSA coordinates to json data (from parser to visualization)
-Next meeting: ?
-
+Next meeting: Thursday, December 8, 2016, 1:30 PM
 
 parser -> visualizer interface:
 json: dictionary of two items:
@@ -283,3 +282,15 @@ json: dictionary of two items:
 2) dictionary:
    keys: gene names
    values: list of visual exon ids (future: make it a tuple of visual exon id, start alignment position, end alignment position)
+
+To-Dos:
+-----------
+Dr. C:   Format Dr. Seipelt-Thiemann's MSA
+Reece:   Flowchart of algorithm to determine which exons map to which visual exons
+         URECA report
+Ethan:   Deposit json output files to repository (1: all genes, 2: two genes) in the Dr. Seipelt-Thiemann's example directory
+         URECA report
+Micah:   Add legend
+         Email URLs to Dr. C
+         Incorporate visual exon spanning multiple visual columns
+Leewood: -afa command-line argument (and by-passing clustal omega execution)
