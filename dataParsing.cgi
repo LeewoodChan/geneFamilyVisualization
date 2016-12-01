@@ -475,28 +475,34 @@ def main(argv):
 
     useArgv = False
     
+    #
+    # get input file(s) from either the CGI form or from the command-line
+    #
     if 'GATEWAY_INTERFACE' in os.environ:
         fileItems = form['filename[]']
         for fileItem in fileItems:
             if fileItem.file:
                 fn = os.path.basename(fileItem.filename.replace("\\", "/"))
                 try:
+		    # copy the file
                     open(path + '/' + fn, 'wb').write(fileItem.file.read())
                 except:
-                    print("""Content-Type: text/html\n\n
+                    # display error message
+		    print("""Content-Type: text/html\n\n
                           <html>
                           <body>
                               <p>%s</p>
                           </body>
                           </html>
                           """ %(path+'/'+fn))
-                    exit()
+                    sys.exit()
 #               message = message + 'The file "' + fn + '"was uploaded successfully with the path' + path + '\n'
 #               else:
 #                    message = 'No file was uploaded'
 
     else:
-        useArgv = True
+        # get file(s) from the command-line
+	useArgv = True
         fileItems = sys.argv[1:]
         for fileItem in fileItems:
             op = open(fileItem,'r').read()
@@ -507,6 +513,7 @@ def main(argv):
             try:
                 open(path + '/' + fn, 'w').write(op)
             except:
+	        # display error message
                 print("""Content-Type: text/html\n\n
                       <html>
                       <body>
@@ -514,7 +521,7 @@ def main(argv):
                       </body>
                       </html>
                       """ %(path+'/'+fn))
-                exit()
+                sys.exit()
                      
     dataProcess()
 	    
@@ -541,4 +548,4 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv) 
-    exit(0)
+    sys.exit(0)

@@ -211,11 +211,10 @@ parser -> visualizer interface:
 json: dictionary of two items:
 1) 2D array of exon properties:
    1st index: (visual exon) id
-   2nd indices: visual column start, visual column end, readingFrame {0-2}, node_color = None
+   2nd indices: visual column start index, visual column end index, readingFrame {0-2}, node_color = None
 2) dictionary:
    keys: gene names
-   values: list of exon ids
-
+   values: list of visual exon ids
 
 Parser:
 -----------
@@ -274,3 +273,13 @@ Leewood:
 
 Future: Add MSA coordinates to json data (from parser to visualization)
 Next meeting: ?
+
+
+parser -> visualizer interface:
+json: dictionary of two items:
+1) 2D array of exon properties:
+   1st index: (visual exon) id
+   2nd indices: visual column start index, visual column end index, readingFrame {0-2}, node_color = None
+2) dictionary:
+   keys: gene names
+   values: list of visual exon ids (future: make it a tuple of visual exon id, start alignment position, end alignment position)
