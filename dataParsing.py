@@ -11,7 +11,7 @@ from Bio.SeqRecord import SeqRecord
 from Bio.Align.Applications import ClustalOmegaCommandline
 import itertools
 import colorsys
-
+import argparse #import argaparse library for addArgv, --afa
 sys.stderr = sys.stdout
 
 UTR_EXON = -2
@@ -91,8 +91,8 @@ def mkDir():
         os.makedirs(path)
         #os.chmod(path, 0o755)
         os.chmod(path, 0o777) # DEBUGGING
-
-def dataProcess():
+#add argument for dataPrcoess for checking if there is afa in command line
+def dataProcess(afa): 
     # get the files in the directory
     listing = os.listdir(path)
 
@@ -195,9 +195,16 @@ def dataProcess():
 	
     # call clustal omega
     in_file = path + "/ALL.txt"
-    out_file= path + "/aligned.fasta"
-    clustalo = ClustalOmegaCommandline(infile=in_file, outfile=out_file, auto=True, cmd="/nfshome/hcarroll/public_html/apps/clustalOmega/bin/clustalo")
-    clustalo()
+
+    # if there is --afa command line use the aligned from user
+    # else use the aligned from the path in file folder
+    out_file = ""
+    if(afa):
+        out_file = "./" + afa
+    else:
+        out_file= path + "/aligned.fasta"
+        clustalo = ClustalOmegaCommandline(infile=in_file, outfile=out_file, auto=True, cmd="/nfshome/hcarroll/public_html/apps/clustalOmega/bin/clustalo")
+        clustalo()
 
     #
     # read in the aligned sequences and store them in their respective objects
@@ -485,7 +492,8 @@ def dataProcess():
         printSVG.write("\n</body>\n")
         printSVG.write("</html>")
 
-def main(argv):
+
+def main():
     os.system("chmod -R 777 files")
     #os.system("echo 'DEBUGGING:' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
 
@@ -493,6 +501,12 @@ def main(argv):
     message = ""
 
     mkDir()
+    #declaration for argparse
+    useArgv = False
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-a", "--afa", metavar="", help="provide aligned file for cluster mega")
+    parser.add_argument("files",nargs="*", help="list fasta file type")
+    args = parser.parse_args()
 
     #
     # get input file(s) from either the CGI form or from the command-line
@@ -517,7 +531,8 @@ def main(argv):
                     sys.exit()
     else:
         # get file(s) from the command-line
-        fileItems = sys.argv[1:]
+        useArgv = True
+        fileItems = args.files          #if using the argument line
         for fileItem in fileItems:
             op = open(fileItem,'r').read()
             fn = os.path.basename(fileItem)
@@ -536,7 +551,8 @@ def main(argv):
                       """ %(path+'/'+fn))
                 sys.exit()
                      
-    dataProcess()
+    afa = args.afa      #get the aligned provide, or set it as False if user dont provide the aligned
+    dataProcess(afa)
 
     redirectStr="""Content-Type: text/html\n\n
 <html>
@@ -548,9 +564,12 @@ def main(argv):
     </body>
 </html>
 """
-    os.system("echo 'DEBUGGING: redirectStr: " + redirectStr + "' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
-    print(redirectStr)
+    if(not useArgv):
+        os.system("echo 'DEBUGGING: redirectStr: " + redirectStr + "' > /tmp/hcarroll.tmp; chmod 777 /tmp/hcarroll.tmp")
+        print(redirectStr)
+    else:
+        print("successfully complete dataParsing")
 
 if __name__ == "__main__":
-    main(sys.argv) 
+    main() 
     sys.exit(0)
