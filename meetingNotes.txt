@@ -294,3 +294,32 @@ Micah:   Add legend
          Email URLs to Dr. C
          Incorporate visual exon spanning multiple visual columns
 Leewood: -afa command-line argument (and by-passing clustal omega execution)
+
+
+20161208
+-----------------------------------------------------------------------------
+
+Review of old and new visualizations (with Dr. Seipelt-Thiemann):
+-----------
+Dr. Seipelt-Thiemann likes that in the new version she is able to see the colors better (thereby reducing the need to have larger nodes sizes)
+Tooltips for the nodes should have: gene names, exons #s (relative to each gene), # base pairs (length of each exon), view of MSA (multiple sequence alignment)
+Legend: with highlighting of lines & visual exon nodes would be nice
+Each visual exon node should display the length(s) of all of it's exons
+Micah, In the new version, the edge from exon 11 to exon 15 should really be to exon 14, right?
+
+Status reports:
+-----------
+Dr. C:   Format Dr. Seipelt-Thiemann's MSA (added git repository as examples/drSeipeltThiemann/drSeipeltAlignment.afa)
+Leewood: -afa command-line argument (and by-passing clustal omega execution)
+
+To-Dos:
+-----------
+Dr. C:   Merge dataParsing.cgi and dataParsing.py
+Leewood: If a user specified an alignment on the command-line, then for each
+         value in the gene_dic, verify that the AA_len and Aligned_str data
+	 members have the same characters (except that Aligned_str can have
+	 gaps, "-"s)
+Micah:   Add legend
+         Email URLs to Dr. C
+         Incorporate visual exon spanning multiple visual columns
+Reece:   Flowchart of algorithm to determine which exons map to which visual exons

@@ -28,17 +28,17 @@ class Gene(object):
         #array that will hold exon lengths 
         self.ExonCount = []
 
-        #length of AA
+        # length of AA (unaligned)
         self.AA_len = 0
 
-        #string to store the translated gene
+        # string to store the translated (unaligned) gene
         self.AA = ''
 
         #string to store the CDS region and lengths
         self.CDS = ''
         self.CDS_len = []
 
-        #string to store the aligned gene
+        # string to store the translated (aligned) gene
         self.Aligned_str = ''
 
         #string to store the frame string
