@@ -192,8 +192,7 @@ def dataProcess(afa):
 
         gene_dic[name] = gene
 
-	
-    # call clustal omega
+ call clustal omega
     in_file = path + "/ALL.txt"
 
     # if there is --afa command line use the aligned from user
@@ -217,7 +216,18 @@ def dataProcess(afa):
             else:
                 gene_dic[name].Aligned_str += line
 
-    #             
+    if afa:
+        # verify that the user-supplied alignment file matches exactly with the translated versions of the user-supplied input files
+        # for each gene
+        #     compare AA with Aligned_str (except for "-"s) (by making a temporary copy of Aligned_str that has all "-"s replaced with "")
+        for name in gene_dic:
+            gene = gene_dic[name]
+            if gene.AA != gene.Aligned_str.replace("-",""):
+                print( "Translated version of input files for", name, "does not match with the supplied alignment:")
+                print( "Translated:", gene.AA)
+                print( "Alignment: ", gene.Aligned_str.replace("-",""), "(any gaps were removed for this error message)")
+                sys.exit(1)    
+#             
     for name, gene in gene_dic.items():
         count = 0  # alignment index
         exon = 0   # index of the current        exon for this gene
