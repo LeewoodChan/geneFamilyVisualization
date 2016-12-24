@@ -1,5 +1,9 @@
-// GLOBAL
+// get the of the screen
+var center = screen.height / 2;
+
+// space between exons
 var padding = 100;
+var yPadding = 100;
 
 // exon graphic properties
 var exonStartSize = 20;
@@ -8,7 +12,6 @@ var exonGrowPerEdge = 5;
 // make SVG Container for the visualization
 var svg = d3.select("body").append("svg").attr("width", screen.width).attr("height", screen.height);
 
-
 // create different goups for exons and edges so that they can render in correct order
 var edgesLayer = svg.append('g');
 var exonLayer = svg.append('g');
@@ -16,30 +19,33 @@ var exonLayer = svg.append('g');
 // array of exon objects
 var exons = [];
 
-exons.push(new createExon(1, 100));
-exons.push(new createExon(3, 100));
-exons.push(new createExon(3, 300));
-exons.push(new createExon(5, 100));
-exons.push(new createExon(5, 300));
+
+// 2D array of exons at each x position
+var exonsAtX = new Array(50);
+for (var i = 0; i < 20; i++) {
+  exonsAtX[i] = new Array();
+}
+
+
+exons.push(new Exon(1));
+exons.push(new Exon(2));
+exons.push(new Exon(2));
+exons.push(new Exon(3));
 
 createEdge(exons[0], exons[1]);
 createEdge(exons[0], exons[1]);
 createEdge(exons[0], exons[2]);
 createEdge(exons[2], exons[3]);
-createEdge(exons[0], exons[1]);
-createEdge(exons[0], exons[1]);
-createEdge(exons[3], exons[4]);
+createEdge(exons[1], exons[3]);
 // createEdge(exons[0], exons[1]);
 // var test = createEdge(exons[1], exons[2]);
 
 
-
-
 // function to create an exon
-function createExon(hPos, ypos) {
+function Exon(x, ypos) {
     // positions and dimensions of exon
-    var xPos = hPos * padding;
-    var yPos = ypos;
+    var xPos = x * padding;
+    var yPos = center;
 
     // radius of exonGraphic
     var radius = 20;
@@ -63,6 +69,28 @@ function createExon(hPos, ypos) {
                                 .style("fill", "lightblue");
 
     // this.exonGraphic.style("stroke-dasharray", ("10, 3"))
+
+
+    // add exon to ExonAtX array
+    exonsAtX[x].push(this);
+
+    // TODO:
+
+    if (exonsAtX.length > 1) {
+        var totalHeight = yPadding * (exonsAtX[x].length-1);
+        var topExonPos = center - (totalHeight * .5);
+        console.log('totalHeight', totalHeight);
+        console.log('center', center);
+        console.log('topExon', topExonPos);
+
+        // reposition all of the exons at proper positions
+        for (var i = 0; i < exonsAtX[x].length; i++) {
+            exonsAtX[x][i].exonGraphic.attr("cy", topExonPos + (yPadding * i));
+            console.log(exonsAtX[x][i].exonGraphic.attr("cy"));
+
+        }
+    }
+
     return this;
 }
 
@@ -78,7 +106,6 @@ function createEdge (exon1, exon2) {
     // add the to exons to in/out lists
     exon1.outExons.push(exon2);
     exon2.outExons.push(exon1);
-
 
     // create the line (edge graphic)
     var edge = edgesLayer.append("line")
