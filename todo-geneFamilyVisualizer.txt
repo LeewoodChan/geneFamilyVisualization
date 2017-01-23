@@ -1,0 +1,48 @@
+================================================================================
+                        Gene Family Visualizer To-Dos
+================================================================================
+
+Make Figures
++ Flowchart of exon layout decision process
+
+Exon Layout Module:
++ Code algorithm to output exon connection data
+  * Process the exons by alignment position, creating new visual columns as needed
++ Develop test scenarios
++ Test output against test scenarios
+  * Add functionality for user-specified Multiple Sequence Alignment (MSA)?
+
+Visualization Module:
++ If there's no exon for 1+ genes, move the box down
++ Have a floating legend with the gene names and colors
++ Boxes within the same gene should never overlap (push everything to the right)
++ Tooltip for visual exons:
+  * Gene name and exon # (e.g., gene ABC123, exon 3; gene XYZ789, exon 7)
+  * Multiple Sequence Alignment subset
++ Make sure the image works for web, articles and poster paper
++ Develop test scenarios
++ Test output against test scenarios
+
+Write Manuscript
++ Outline paper
+  * Introduction & background
+  * Methods
+  * Results
+  * Discussion / conclusion
++ Share outline with co-authors
++ Revise outline
++ First Draft  
+  * Introduction & background
+  * Methods
+  * Results
+  * Discussion / conclusion
++ Share draft with co-authors
++ Revise draft
+
+Website development
++ Design / beautification
++ Documentation / instructions
+
+Submit
+
+Celebrate
