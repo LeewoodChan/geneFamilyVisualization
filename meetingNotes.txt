@@ -314,7 +314,7 @@ Leewood: -afa command-line argument (and by-passing clustal omega execution)
 
 To-Dos:
 -----------
-Dr. C:   Merge dataParsing.cgi and dataParsing.py
+Dr. C:   Merge dataParsing.cgi and dataParsing.py (done: merged into geneFamilyVis.cgi)
 Leewood: If a user specified an alignment on the command-line, then for each
          value in the gene_dic, verify that the AA_len and Aligned_str data
 	 members have the same characters (except that Aligned_str can have
