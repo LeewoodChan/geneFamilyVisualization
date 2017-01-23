@@ -1,13 +1,14 @@
 // get the of the screen
-var center = screen.height / 2;
+var center = screen.height / 2.5;
 
 // space between exons
-var padding = 100;
+var padding = 150;
 var yPadding = 100;
 
 // exon graphic properties
 var exonStartSize = 20;
-var exonGrowPerEdge = 5;
+var exonGrowPerEdge = 3;
+var hoverGrow = 20;
 
 // make SVG Container for the visualization
 var svg = d3.select("body").append("svg").attr("width", screen.width).attr("height", screen.height);
@@ -27,19 +28,81 @@ for (var i = 0; i < 20; i++) {
 }
 
 
-exons.push(new Exon(1));
-exons.push(new Exon(2));
-exons.push(new Exon(2));
-exons.push(new Exon(3));
+// create exons
+addExon(1);
+addExon(1);
+addExon(1);
+addExon(1);
+addExon(2);
+addExon(2);
+addExon(2);
+addExon(2);
+addExon(2);
+addExon(2);
+addExon(2);
+addExon(3);
+addExon(3);
+addExon(3);
+addExon(4);
+addExon(4);
+addExon(5);
+addExon(6);
+addExon(7);
+addExon(8);
+addExon(8);
+addExon(8);
+addExon(8);
+addExon(8);
+addExon(8);
+addExon(8);
+addExon(8);
 
-createEdge(exons[0], exons[1]);
-createEdge(exons[0], exons[1]);
-createEdge(exons[0], exons[2]);
-createEdge(exons[2], exons[3]);
-createEdge(exons[1], exons[3]);
+addGeneFamily([0, 4, 11, 14, 16, 17, 18, 19, 20, 22, 24], 'blue');
+addGeneFamily([5, 11, 15, 16, 17, 18, 19, 20, 22, 24], 'red');
+addGeneFamily([6, 12, 15, 16, 17, 18, 19, 20, 22, 24], 'orange');
+addGeneFamily([1, 7, 12, 15, 16, 17, 18, 19, 21, 24], 'lightblue');
+addGeneFamily([2, 8, 12, 15, 16, 17, 18, 19, 21, 23, 24], 'green');
+addGeneFamily([3, 9, 12, 15, 16, 17, 18, 19, 21, 23, 24], 'brown');
+
+
+// console.log(exons);
+
+
+// createEdge(exons[0], exons[1]);
+// createEdge(exons[0], exons[1]);
+// createEdge(exons[0], exons[2]);
+// createEdge(exons[2], exons[3]);
+// createEdge(exons[1], exons[3]);
 // createEdge(exons[0], exons[1]);
 // var test = createEdge(exons[1], exons[2]);
 
+
+
+svg.append("text")
+        .attr("x", (screen.width / 2))
+        .attr("y", 0 + (30))
+        .attr("text-anchor", "middle")
+        .style("font-size", "19px")
+        .style("font-family", "Futura")
+        .style("text-decoration", "underline")
+        .text("Gene Family Visualization");
+
+
+
+// function to add an exon to the graphi
+function addExon(x) {
+    exons.push(new Exon(x));
+}
+
+
+
+// funciton to create an exon family
+function addGeneFamily (exonNumbers, color) {
+  for (var i = 0; i < exonNumbers.length-2; i++) {
+    createEdge(exons[exonNumbers[i]], exons[exonNumbers[i+1]]);
+    // createEdge(exons[i], exons[i + 1]);
+  }
+}
 
 // function to create an exon
 function Exon(x, ypos) {
@@ -66,7 +129,20 @@ function Exon(x, ypos) {
                                 .attr("ry", radius)
                                 .style("stroke-width", 2)
                                 .style("stroke", "black")
-                                .style("fill", "lightblue");
+                                .style("fill", "white")
+                                .on('mouseenter', function(d){
+                                    d3.select(this).style("fill", "lightblue")
+                                    d3.select(this).transition().attr("ry", parseFloat(d3.select(this).attr("ry")) + hoverGrow)
+                                                                .attr("rx", parseFloat(d3.select(this).attr("rx")) + hoverGrow)
+                                                                .duration(1.4);
+                                })
+                                .on('mouseleave', function(d){
+                                    d3.select(this).style("fill", "white")
+                                    d3.select(this).transition().attr("ry", parseFloat(d3.select(this).attr("ry")) - hoverGrow)
+                                                                .attr("rx", parseFloat(d3.select(this).attr("rx")) - hoverGrow)
+                                });
+
+
 
     // this.exonGraphic.style("stroke-dasharray", ("10, 3"))
 
@@ -76,6 +152,7 @@ function Exon(x, ypos) {
 
     // TODO:
 
+    // if there are more than one exons at an x position, adjust positions of exons
     if (exonsAtX.length > 1) {
         var totalHeight = yPadding * (exonsAtX[x].length-1);
         var topExonPos = center - (totalHeight * .5);
