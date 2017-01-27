@@ -323,3 +323,23 @@ Micah:   Add legend
          Email URLs to Dr. C
          Incorporate visual exon spanning multiple visual columns
 Reece:   Flowchart of algorithm to determine which exons map to which visual exons
+
+
+
+20170127
+-----------------------------------------------------------------------------
+New Meeting time (that doesn't conflict with clubs?)
++ Mondays, 2:30 PM
+
+Status reports (due 8 AM the morning of our meeting):
+1) Tasks accomplished
+2) Stumbling blocks encountered
+3) Plans for the next week
+
+To-Dos:
+-----------
+Dr. C:   
+Arol:
+Micah:   Milestones
+Ethan:   Milestones
+         + Flowchart of algorithm to determine which exons map to which visual exons
