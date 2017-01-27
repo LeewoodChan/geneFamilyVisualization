@@ -339,7 +339,9 @@ Status reports (due 8 AM the morning of our meeting):
 To-Dos:
 -----------
 Dr. C:   
-Arol:
+Arol:    Background
+         Look at github
 Micah:   Milestones
+         Add all relevant files from Leewood's github repo
 Ethan:   Milestones
          + Flowchart of algorithm to determine which exons map to which visual exons
